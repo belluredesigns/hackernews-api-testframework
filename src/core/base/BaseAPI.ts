@@ -35,7 +35,7 @@ export abstract class BaseAPI {
    * @param headers - Optional headers for this request
    * @returns Promise resolving to HTTP response with typed data
    */
-  protected async get<T = any>(
+  protected async get<T = unknown>(
     endpoint: string,
     headers?: Record<string, string>
   ): Promise<HttpResponse<T>> {
@@ -50,9 +50,9 @@ export abstract class BaseAPI {
    * @param headers - Optional headers for this request
    * @returns Promise resolving to HTTP response with typed data
    */
-  protected async post<T = any>(
+  protected async post<T = unknown>(
     endpoint: string,
-    body?: any,
+    body?: unknown,
     headers?: Record<string, string>
   ): Promise<HttpResponse<T>> {
     logger.debug(`[${this.serviceName}] POST ${endpoint}`, body);
