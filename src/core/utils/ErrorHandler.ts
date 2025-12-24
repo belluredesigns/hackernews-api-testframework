@@ -19,12 +19,7 @@ export class APIError extends Error {
    * @param endpoint - API endpoint that failed
    * @param responseBody - Optional response body from the API
    */
-  constructor(
-    statusCode: number,
-    message: string,
-    endpoint: string,
-    responseBody?: any
-  ) {
+  constructor(statusCode: number, message: string, endpoint: string, responseBody?: any) {
     super(message);
     this.statusCode = statusCode;
     this.endpoint = endpoint;
@@ -50,11 +45,7 @@ export class ValidationError extends Error {
    * @param field - Optional field name that failed validation
    * @param validationDetails - Optional additional validation details
    */
-  constructor(
-    message: string,
-    field?: string,
-    validationDetails?: any
-  ) {
+  constructor(message: string, field?: string, validationDetails?: any) {
     super(message);
     this.field = field;
     this.validationDetails = validationDetails;

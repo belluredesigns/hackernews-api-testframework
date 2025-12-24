@@ -91,8 +91,7 @@ test.describe('@performance Performance Tests', () => {
 
     const average = measurements.reduce((sum, val) => sum + val, 0) / measurements.length;
     const variance =
-      measurements.reduce((sum, val) => sum + Math.pow(val - average, 2), 0) /
-      measurements.length;
+      measurements.reduce((sum, val) => sum + Math.pow(val - average, 2), 0) / measurements.length;
     const stdDev = Math.sqrt(variance);
 
     expect(average).toBeLessThan(2000);
@@ -172,10 +171,8 @@ test.describe('@performance Performance Tests', () => {
     const firstHalf = measurements.slice(0, iterations / 2);
     const secondHalf = measurements.slice(iterations / 2);
 
-    const avgFirst =
-      firstHalf.reduce((sum, val) => sum + val, 0) / firstHalf.length;
-    const avgSecond =
-      secondHalf.reduce((sum, val) => sum + val, 0) / secondHalf.length;
+    const avgFirst = firstHalf.reduce((sum, val) => sum + val, 0) / firstHalf.length;
+    const avgSecond = secondHalf.reduce((sum, val) => sum + val, 0) / secondHalf.length;
 
     // Second half should not be significantly slower than first half
     expect(avgSecond).toBeLessThan(avgFirst * 1.5);

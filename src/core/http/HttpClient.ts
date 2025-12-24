@@ -67,7 +67,7 @@ export class HttpClient {
     this.defaultHeaders = {
       'Content-Type': 'application/json',
       ...configManager.getHeaders(),
-      ...headers
+      ...headers,
     };
     this.timeout = timeout || configManager.getTimeout();
     this.retries = retries ?? configManager.getRetries();
@@ -104,7 +104,7 @@ export class HttpClient {
           method: config.method,
           headers,
           body: config.body ? JSON.stringify(config.body) : undefined,
-          signal: controller.signal
+          signal: controller.signal,
         });
 
         clearTimeout(timeoutId);
@@ -117,7 +117,7 @@ export class HttpClient {
         let data: T;
         const contentType = response.headers.get('content-type');
         if (contentType?.includes('application/json')) {
-          data = await response.json() as T;
+          data = (await response.json()) as T;
         } else {
           data = (await response.text()) as T;
         }
@@ -127,7 +127,7 @@ export class HttpClient {
           statusText: response.statusText,
           headers: responseHeaders,
           data,
-          ok: response.ok
+          ok: response.ok,
         };
 
         if (!response.ok) {
@@ -141,7 +141,6 @@ export class HttpClient {
 
         logger.debug(`${config.method} ${url} - ${response.status}`, { data });
         return httpResponse;
-
       } catch (error: any) {
         lastError = error;
 
@@ -179,7 +178,11 @@ export class HttpClient {
    * @param headers - Optional custom headers
    * @returns Promise resolving to HttpResponse with typed data
    */
-  async post<T = any>(url: string, body?: any, headers?: Record<string, string>): Promise<HttpResponse<T>> {
+  async post<T = any>(
+    url: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Promise<HttpResponse<T>> {
     return this.request<T>({ method: 'POST', url, body, headers });
   }
 
@@ -191,7 +194,11 @@ export class HttpClient {
    * @param headers - Optional custom headers
    * @returns Promise resolving to HttpResponse with typed data
    */
-  async put<T = any>(url: string, body?: any, headers?: Record<string, string>): Promise<HttpResponse<T>> {
+  async put<T = any>(
+    url: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Promise<HttpResponse<T>> {
     return this.request<T>({ method: 'PUT', url, body, headers });
   }
 
@@ -214,7 +221,11 @@ export class HttpClient {
    * @param headers - Optional custom headers
    * @returns Promise resolving to HttpResponse with typed data
    */
-  async patch<T = any>(url: string, body?: any, headers?: Record<string, string>): Promise<HttpResponse<T>> {
+  async patch<T = any>(
+    url: string,
+    body?: any,
+    headers?: Record<string, string>
+  ): Promise<HttpResponse<T>> {
     return this.request<T>({ method: 'PATCH', url, body, headers });
   }
 

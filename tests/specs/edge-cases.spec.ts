@@ -193,9 +193,7 @@ test.describe('@regression Edge Case Tests', () => {
     }
   });
 
-  test('should handle concurrent requests for different items', async ({
-    hackerNewsClient,
-  }) => {
+  test('should handle concurrent requests for different items', async ({ hackerNewsClient }) => {
     const ids = [1, 2, 3, 4, 5];
 
     const promises = ids.map(id => hackerNewsClient.getItem(id));

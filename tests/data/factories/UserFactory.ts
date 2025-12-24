@@ -20,7 +20,7 @@ export class UserFactory {
       karma: overrides.karma ?? Math.floor(Math.random() * 10000),
       about: overrides.about ?? 'This is a test user bio',
       submitted: overrides.submitted ?? [1, 2, 3, 4, 5],
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -32,7 +32,7 @@ export class UserFactory {
   static createHighKarmaUser(karma: number = 50000): HNUser {
     return this.createUser({
       karma,
-      about: 'High karma user for testing'
+      about: 'High karma user for testing',
     });
   }
 
@@ -46,7 +46,7 @@ export class UserFactory {
     return this.createUser({
       created: now - 86400,
       karma: 10,
-      submitted: [1]
+      submitted: [1],
     });
   }
 
@@ -59,7 +59,7 @@ export class UserFactory {
     const submissions = Array.from({ length: submissionCount }, (_, i) => i + 1);
     return this.createUser({
       submitted: submissions,
-      karma: submissionCount * 50
+      karma: submissionCount * 50,
     });
   }
 }

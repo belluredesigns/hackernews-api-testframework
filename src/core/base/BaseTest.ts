@@ -37,14 +37,14 @@ export const test = base.extend<BaseTestContext>({
     } else if (status === 'failed') {
       logger.error(`Test failed: ${testInfo.title} (${duration}ms)`, {
         error: testInfo.error?.message,
-        stack: testInfo.error?.stack
+        stack: testInfo.error?.stack,
       });
     } else if (status === 'timedOut') {
       logger.error(`Test timed out: ${testInfo.title} (${duration}ms)`);
     } else if (status === 'skipped') {
       logger.warn(`Test skipped: ${testInfo.title}`);
     }
-  }
+  },
 });
 
 export { expect } from '@playwright/test';

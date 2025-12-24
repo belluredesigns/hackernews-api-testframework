@@ -192,9 +192,7 @@ test.describe('@security Security Tests', () => {
   test('should handle concurrent requests without resource exhaustion', async ({
     hackerNewsClient,
   }) => {
-    const promises = Array.from({ length: 50 }, (_, i) =>
-      hackerNewsClient.getItem(i + 1)
-    );
+    const promises = Array.from({ length: 50 }, (_, i) => hackerNewsClient.getItem(i + 1));
 
     const start = performance.now();
     const results = await Promise.all(promises);

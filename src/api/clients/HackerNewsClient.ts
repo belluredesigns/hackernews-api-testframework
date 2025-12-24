@@ -176,7 +176,7 @@ export class HackerNewsClient extends BaseAPI implements IHackerNewsAPI {
     const result: StoryWithCommentResponse = {
       title: story.title,
       url: story.url,
-      top_comment: 'No comments found.'
+      top_comment: 'No comments found.',
     };
 
     if (story.kids && Array.isArray(story.kids) && story.kids.length > 0) {

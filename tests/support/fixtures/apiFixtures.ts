@@ -26,7 +26,7 @@ export const test = base.extend<APIFixtures>({
   hackerNewsClient: async ({ baseUrl }, use) => {
     const client = new HackerNewsClient(baseUrl);
     await use(client);
-  }
+  },
 });
 
 export { expect } from '@playwright/test';

@@ -55,11 +55,10 @@ export class ResponseValidator {
         if (error instanceof ValidationError) {
           throw error;
         }
-        throw new ValidationError(
-          `Validation failed: ${rule.message}`,
-          rule.field,
-          { error, data }
-        );
+        throw new ValidationError(`Validation failed: ${rule.message}`, rule.field, {
+          error,
+          data,
+        });
       }
     }
     logger.debug('Schema validation passed', { rulesCount: rules.length });
@@ -84,11 +83,10 @@ export class ResponseValidator {
     }
 
     if (missing.length > 0) {
-      throw new ValidationError(
-        `Missing required fields: ${missing.join(', ')}`,
-        missing[0],
-        { missing, data }
-      );
+      throw new ValidationError(`Missing required fields: ${missing.join(', ')}`, missing[0], {
+        missing,
+        data,
+      });
     }
   }
 
@@ -126,19 +124,11 @@ export class ResponseValidator {
     const value = this.getNestedValue(data, field);
 
     if (!Array.isArray(value)) {
-      throw new ValidationError(
-        `Field '${field}' should be an array`,
-        field,
-        { value }
-      );
+      throw new ValidationError(`Field '${field}' should be an array`, field, { value });
     }
 
     if (value.length === 0) {
-      throw new ValidationError(
-        `Array field '${field}' should not be empty`,
-        field,
-        { value }
-      );
+      throw new ValidationError(`Array field '${field}' should not be empty`, field, { value });
     }
   }
 
@@ -152,11 +142,11 @@ export class ResponseValidator {
    */
   static validateRange(value: number, min: number, max: number, field?: string): void {
     if (value < min || value > max) {
-      throw new ValidationError(
-        `Value ${value} is out of range [${min}, ${max}]`,
-        field,
-        { value, min, max }
-      );
+      throw new ValidationError(`Value ${value} is out of range [${min}, ${max}]`, field, {
+        value,
+        min,
+        max,
+      });
     }
   }
 
@@ -169,11 +159,10 @@ export class ResponseValidator {
    */
   static validatePattern(value: string, pattern: RegExp, field?: string): void {
     if (!pattern.test(value)) {
-      throw new ValidationError(
-        `Value does not match pattern ${pattern}`,
-        field,
-        { value, pattern: pattern.toString() }
-      );
+      throw new ValidationError(`Value does not match pattern ${pattern}`, field, {
+        value,
+        pattern: pattern.toString(),
+      });
     }
   }
 
@@ -187,11 +176,10 @@ export class ResponseValidator {
    */
   static validateEnum<T>(value: T, allowedValues: T[], field?: string): void {
     if (!allowedValues.includes(value)) {
-      throw new ValidationError(
-        `Value must be one of: ${allowedValues.join(', ')}`,
-        field,
-        { value, allowedValues }
-      );
+      throw new ValidationError(`Value must be one of: ${allowedValues.join(', ')}`, field, {
+        value,
+        allowedValues,
+      });
     }
   }
 

@@ -24,11 +24,10 @@ export class SchemaValidator {
     if (!validator(data)) {
       const errors = (validator as any).errors;
       logger.error(`Schema validation failed for ${schemaName}`, { errors, data });
-      throw new ValidationError(
-        `Schema validation failed for ${schemaName}`,
-        undefined,
-        { errors, data }
-      );
+      throw new ValidationError(`Schema validation failed for ${schemaName}`, undefined, {
+        errors,
+        data,
+      });
     }
     return data;
   }

@@ -10,7 +10,7 @@ export enum LogLevel {
   /** Warning level - warning messages for potentially problematic situations */
   WARN = 'WARN',
   /** Error level - error messages for serious problems */
-  ERROR = 'ERROR'
+  ERROR = 'ERROR',
 }
 
 /**

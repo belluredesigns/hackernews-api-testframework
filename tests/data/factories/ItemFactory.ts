@@ -21,7 +21,7 @@ export class ItemFactory {
       score: overrides.score ?? 100,
       descendants: overrides.descendants ?? 25,
       kids: overrides.kids ?? [101, 102, 103],
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -39,7 +39,7 @@ export class ItemFactory {
       text: overrides.text ?? 'This is a test comment',
       parent: overrides.parent ?? 1,
       kids: overrides.kids,
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -57,7 +57,7 @@ export class ItemFactory {
       title: overrides.title ?? 'Test Job Posting',
       text: overrides.text ?? 'We are hiring!',
       url: overrides.url ?? 'https://example.com/jobs',
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -76,7 +76,7 @@ export class ItemFactory {
       text: overrides.text ?? 'What do you think?',
       parts: overrides.parts ?? [201, 202, 203],
       descendants: overrides.descendants ?? 10,
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -89,7 +89,7 @@ export class ItemFactory {
     return {
       id: overrides.id ?? Math.floor(Math.random() * 1000000),
       deleted: true,
-      ...overrides
+      ...overrides,
     };
   }
 
@@ -106,7 +106,7 @@ export class ItemFactory {
 
     const story = this.createStory({
       id: storyId,
-      kids: comments.map(c => c.id)
+      kids: comments.map(c => c.id),
     });
 
     return { story, comments };

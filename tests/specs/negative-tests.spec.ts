@@ -150,9 +150,7 @@ test.describe('@negative Boundary Value Tests', () => {
 });
 
 test.describe('@negative Data Integrity Tests', () => {
-  test('should verify all story IDs in top stories are unique', async ({
-    hackerNewsClient,
-  }) => {
+  test('should verify all story IDs in top stories are unique', async ({ hackerNewsClient }) => {
     const stories = await hackerNewsClient.getTopStories(100);
     const uniqueIds = new Set(stories);
 

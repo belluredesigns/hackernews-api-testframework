@@ -75,7 +75,6 @@ test.describe('@smoke @requirements API Requirements Tests', () => {
     expect(topStory).not.toBeNull();
     expect(topStory).toBeDefined();
 
-
     // Verify the story has required fields
     expect(topStory?.id).toBe(topStoryId);
     expect(topStory?.type).toBe('story');

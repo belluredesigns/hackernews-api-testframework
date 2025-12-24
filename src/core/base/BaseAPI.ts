@@ -18,11 +18,7 @@ export abstract class BaseAPI {
    * @param baseUrl - Optional base URL, defaults to config manager URL
    * @param headers - Optional default headers for all requests
    */
-  constructor(
-    serviceName: string,
-    baseUrl?: string,
-    headers?: Record<string, string>
-  ) {
+  constructor(serviceName: string, baseUrl?: string, headers?: Record<string, string>) {
     this.serviceName = serviceName;
     this.baseUrl = baseUrl || configManager.getBaseUrl();
     this.httpClient = new HttpClient(this.baseUrl, headers);
@@ -110,10 +106,7 @@ export abstract class BaseAPI {
    * @param response - HTTP response to validate
    * @param expectedStatus - Expected status code(s)
    */
-  protected validateResponse(
-    response: HttpResponse,
-    expectedStatus?: number | number[]
-  ): void {
+  protected validateResponse(response: HttpResponse, expectedStatus?: number | number[]): void {
     if (expectedStatus) {
       ResponseValidator.validateStatus(response, expectedStatus);
     }

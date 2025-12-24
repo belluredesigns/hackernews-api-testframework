@@ -159,9 +159,7 @@ test.describe('@smoke Schema Validation Tests', () => {
    * Test: Verify all required story fields are present
    * Validates that stories have all mandatory fields defined
    */
-  test('should validate all required fields are present in story', async ({
-    hackerNewsClient,
-  }) => {
+  test('should validate all required fields are present in story', async ({ hackerNewsClient }) => {
     const topStories = await hackerNewsClient.getTopStories(5);
 
     for (const storyId of topStories) {
@@ -182,18 +180,18 @@ test.describe('@smoke Schema Validation Tests', () => {
    * Test: Verify all required user fields are present
    * Validates that users have all mandatory fields with correct types
    */
-  test('should validate all required fields are present in user', async ({
-    hackerNewsClient,
-  }) => {
+  test('should validate all required fields are present in user', async ({ hackerNewsClient }) => {
     const user = await hackerNewsClient.getUser('pg');
     expect(user).not.toBeNull();
 
-    if (user) { expect(user.id).toBeDefined();
-    expect(user!.created).toBeDefined();
-    expect(user!.karma).toBeDefined();
+    if (user) {
+      expect(user.id).toBeDefined();
+      expect(user!.created).toBeDefined();
+      expect(user!.karma).toBeDefined();
 
-    expect(typeof user!.id).toBe('string');
-    expect(typeof user!.created).toBe('number');
-    expect(typeof user.karma).toBe('number'); }
+      expect(typeof user!.id).toBe('string');
+      expect(typeof user!.created).toBe('number');
+      expect(typeof user.karma).toBe('number');
+    }
   });
 });

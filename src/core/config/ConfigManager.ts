@@ -81,21 +81,21 @@ export class ConfigManager {
       name: 'dev',
       baseUrl: 'https://hacker-news.firebaseio.com/v0',
       timeout: 30000,
-      retries: 2
+      retries: 2,
     };
 
     const staging: Environment = {
       name: 'staging',
       baseUrl: 'https://hacker-news.firebaseio.com/v0',
       timeout: 30000,
-      retries: 2
+      retries: 2,
     };
 
     const production: Environment = {
       name: 'production',
       baseUrl: 'https://hacker-news.firebaseio.com/v0',
       timeout: 30000,
-      retries: 1
+      retries: 1,
     };
 
     this.environments.set('dev', dev);
@@ -124,12 +124,12 @@ export class ConfigManager {
       environment: environment!,
       logging: {
         level: process.env.LOG_LEVEL || 'INFO',
-        enabled: process.env.LOGGING_ENABLED !== 'false'
+        enabled: process.env.LOGGING_ENABLED !== 'false',
       },
       reporting: {
         outputDir: process.env.REPORT_DIR || './reports',
-        format: (process.env.REPORT_FORMAT || 'html,json').split(',')
-      }
+        format: (process.env.REPORT_FORMAT || 'html,json').split(','),
+      },
     };
   }
 
