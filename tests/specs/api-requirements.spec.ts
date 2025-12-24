@@ -69,7 +69,7 @@ test.describe('@smoke @requirements API Requirements Tests', () => {
     console.log(`Current top story ID: ${topStoryId}`);
 
     // Step 3: Retrieve the full story details using Items API
-    const topStory = await hackerNewsClient.getItem(topStoryId);
+    const topStory = await hackerNewsClient.getItem(topStoryId!);
 
     // Verify the story was retrieved successfully
     expect(topStory).not.toBeNull();
@@ -80,7 +80,7 @@ test.describe('@smoke @requirements API Requirements Tests', () => {
     expect(topStory?.type).toBe('story');
     expect(topStory?.title).toBeDefined();
     expect(typeof topStory?.title).toBe('string');
-    expect(topStory?.title.length).toBeGreaterThan(0);
+    expect(topStory?.title?.length).toBeGreaterThan(0);
 
     // Verify story metadata
     expect(topStory?.by).toBeDefined();
@@ -185,7 +185,7 @@ test.describe('@smoke @requirements API Requirements Tests', () => {
     // Part 2: Get the current top story
     console.log('\n2. Retrieving current top story...');
     const currentTopStoryId = topStories[0];
-    const currentTopStory = await hackerNewsClient.getItem(currentTopStoryId);
+    const currentTopStory = await hackerNewsClient.getItem(currentTopStoryId!);
     expect(currentTopStory).not.toBeNull();
     console.log(`   ✓ Story: "${currentTopStory?.title}"`);
     console.log(`   ✓ Score: ${currentTopStory?.score || 0}`);
