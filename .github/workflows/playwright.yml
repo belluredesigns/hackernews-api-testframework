@@ -203,11 +203,25 @@ jobs:
           echo "Performance: ${{ needs.performance-tests.result }}"
           echo "Security: ${{ needs.security-tests.result }}"
 
-      - name: Download combined report
+      - name: Download all test artifacts
         uses: actions/download-artifact@v4
         with:
-          name: combined-test-report
-          path: reports
+          path: all-artifacts
+        continue-on-error: true
+
+      - name: Prepare HTML reports for email
+        run: |
+          mkdir -p email-reports
+          # Find and copy HTML reports from artifacts
+          find all-artifacts -type d -name "html" -exec cp -r {} email-reports/ \; || true
+          # Zip the HTML reports if they exist
+          if [ -d "email-reports/html" ]; then
+            cd email-reports
+            zip -r ../test-reports.zip html/
+            cd ..
+          fi
+          # Also copy JSON files
+          find all-artifacts -name "*.json" -exec cp {} email-reports/ \; || true
         continue-on-error: true
 
       # Email notification - configure EMAIL_USERNAME, EMAIL_PASSWORD, EMAIL_TO, EMAIL_FROM secrets to enable
@@ -237,8 +251,12 @@ jobs:
             - Performance Tests: ${{ needs.performance-tests.result }}
             - Security Tests: ${{ needs.security-tests.result }}
 
-            View full results: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
-          attachments: reports/*.json
+            📊 Attached Files:
+            - test-reports.zip: Extract this ZIP file and open html/index.html in your browser to view the interactive test report
+            - *.json: JSON test results for programmatic analysis
+
+            View full results online: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          attachments: test-reports.zip,email-reports/*.json
           ignore_cert: false
           convert_markdown: true
 
