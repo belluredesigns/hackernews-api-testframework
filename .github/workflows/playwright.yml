@@ -208,13 +208,16 @@ jobs:
         with:
           name: combined-test-report
           path: reports
+        continue-on-error: true
 
+      # Email notification - configure EMAIL_USERNAME, EMAIL_PASSWORD, EMAIL_TO, EMAIL_FROM secrets to enable
       - name: Send email with test report
         uses: dawidd6/action-send-mail@v3
+        continue-on-error: true
         with:
           server_address: smtp-mail.outlook.com
           server_port: 587
-          secure: true
+          secure: false
           username: ${{ secrets.EMAIL_USERNAME }}
           password: ${{ secrets.EMAIL_PASSWORD }}
           subject: "Test Results: ${{ github.workflow }} - ${{ github.ref_name }}"
