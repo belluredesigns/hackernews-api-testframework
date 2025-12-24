@@ -64,6 +64,7 @@ jobs:
           name: smoke-test-results
           path: reports/
           retention-days: 7
+          if-no-files-found: ignore
 
   test:
     name: Full Test Suite
@@ -103,6 +104,7 @@ jobs:
             reports/
             test-results/
           retention-days: 30
+          if-no-files-found: ignore
 
   performance-tests:
     name: Performance Tests
@@ -131,6 +133,7 @@ jobs:
           name: performance-test-results
           path: reports/
           retention-days: 30
+          if-no-files-found: ignore
 
   security-tests:
     name: Security Tests
@@ -159,6 +162,7 @@ jobs:
           name: security-test-results
           path: reports/
           retention-days: 30
+          if-no-files-found: ignore
 
   report:
     name: Generate & Publish Report
@@ -184,18 +188,12 @@ jobs:
           name: combined-test-report
           path: reports/merged/
           retention-days: 30
-
-      - name: Publish HTML Report
-        uses: actions/upload-artifact@v4
-        with:
-          name: html-report
-          path: reports/html/
-          retention-days: 30
+          if-no-files-found: ignore
 
   notify:
     name: Notify Results
     runs-on: ubuntu-latest
-    needs: [test, performance-tests, security-tests]
+    needs: [test, performance-tests, security-tests, report]
     if: always()
     steps:
       - name: Check test results
@@ -204,6 +202,42 @@ jobs:
           echo "Status: ${{ needs.test.result }}"
           echo "Performance: ${{ needs.performance-tests.result }}"
           echo "Security: ${{ needs.security-tests.result }}"
+
+      - name: Download combined report
+        uses: actions/download-artifact@v4
+        with:
+          name: combined-test-report
+          path: reports
+
+      - name: Send email with test report
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: "Test Results: ${{ github.workflow }} - ${{ github.ref_name }}"
+          to: ${{ secrets.EMAIL_TO }}
+          from: ${{ secrets.EMAIL_FROM }}
+          body: |
+            Test Suite Execution Report
+
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.sha }}
+            Workflow: ${{ github.workflow }}
+            Run Number: ${{ github.run_number }}
+
+            Test Results:
+            - Full Test Suite: ${{ needs.test.result }}
+            - Performance Tests: ${{ needs.performance-tests.result }}
+            - Security Tests: ${{ needs.security-tests.result }}
+
+            View full results: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          attachments: reports/*.json
+          ignore_cert: false
+          convert_markdown: true
 
       # Add Slack notification (uncomment and configure)
       # - name: Slack Notification
